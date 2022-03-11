@@ -10,7 +10,9 @@ import { useStore } from 'vuex';
 export default {
 	setup(){
 		const {getters: { levelSize }} = useStore()
-		return { levelSize : levelSize + 'px' }
+		return { 
+			levelSize : levelSize + 'px' 
+			}
 	},
 	components: {
 		Lift
