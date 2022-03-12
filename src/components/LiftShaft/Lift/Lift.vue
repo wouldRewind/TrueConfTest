@@ -28,5 +28,6 @@ export default {
 		width: 100%;
 		background: $liftColor;
 		position: relative;
+		transform: translateY();
 	}
 </style>

@@ -1,5 +1,6 @@
 export const state = {
-	shafts: 4, // количество лифтовых шахт
-	levels: 7, // количество этажей
-
+	shafts: 5, // количество лифтовых шахт
+	levels: 13, // количество этажей,
+	shaftSystem: [],
+	buttonSystem: []
 }

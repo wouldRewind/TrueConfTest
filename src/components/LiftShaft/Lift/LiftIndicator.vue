@@ -32,7 +32,7 @@ export default {
 		height: $indicatorHeight;
 		width: $indicatorWidth;
 		display: flex;
-		// display: none;
+		display: none;
 		&-to{
 			color: $textIndicatorColor;
 			font-family: serif;

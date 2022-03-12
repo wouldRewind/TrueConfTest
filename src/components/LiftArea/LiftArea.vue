@@ -2,7 +2,9 @@
 	<div class="wrapper">
 		<div :style="{background: areaBackground}" class="area">
 			<div class="area-shafts">
-				<LiftShaft v-for="(shaft,index) in shaftSystem" :key="index"/>
+				<LiftShaft 
+				v-for="(shaft,index) in shaftSystem" 
+				:key="index"/>
 			</div>
 			<ButtonSystem/>
 		</div>
@@ -16,10 +18,11 @@ import LiftShaft from "../LiftShaft/LiftShaft.vue"
 import { useStore } from 'vuex'
 export default {
 	setup(){
-		const { getters : { areaBackground, shaftSystem } } = useStore()
+		const { dispatch , getters} = useStore()
+		dispatch("initSystem") // init shaftSystem & init buttonSystem 
 		return {
-			areaBackground,
-			shaftSystem
+			areaBackground: getters.areaBackground,
+			shaftSystem: getters.shaftSystem
 		}
 	},	
 	components: {
@@ -44,7 +47,6 @@ export default {
 		&-shafts{
 			box-sizing: content-box;
 			height: 100%;
-			// width: 90%;
 			display: flex;
 		}
 	}

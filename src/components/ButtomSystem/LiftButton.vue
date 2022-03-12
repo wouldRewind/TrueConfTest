@@ -10,10 +10,19 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import { useStore } from 'vuex'
+import { findFreeShaft } from "./functions"
 export default {
-	setup(){
+	setup({ level }){
+		const {dispatch ,getters: { buttonSystem, shaftSystem, maxLevel }} = useStore()
 		const activeButton = ref(false)
-		const changeActiveButton = () => activeButton.value = !activeButton.value
+		const changeActiveButton = () => {
+			const freeShaft = findFreeShaft(shaftSystem,level,maxLevel)
+			// console.log(freeShaft)
+			dispatch("registerCall",freeShaft)
+			activeButton.value = !activeButton.value
+		}
+
 		return {
 			activeButton,
 			changeActiveButton
@@ -35,7 +44,6 @@ export default {
 		font-size: $fontSize;
 	}
 	.btn-wrap{
-		// padding-top: 5px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
