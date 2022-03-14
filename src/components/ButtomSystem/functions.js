@@ -1,5 +1,5 @@
 //find free and closest shaft to that level
-export const findFreeShaft = (shaftSystem,levelToMove,maxLevel) => shaftSystem
+export const findFreeClosestShaft = (shaftSystem,levelToMove,maxLevel) => shaftSystem
 		.reduce((currentShaft,{ isMoving, currentLevel, number }) => 
 		!isMoving && Math.abs(levelToMove - currentLevel) < currentShaft.gap ? {
 			currentLevel,

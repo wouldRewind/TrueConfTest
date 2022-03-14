@@ -6,17 +6,27 @@ export const mutations = {
 			currentLevel: 1,
 			isMoving: false,
 			movingTo: null,
+			pending: false,
 			gap: null,
 			direction: null,
-			number: index + 1
+			number: index + 1,
+			
 		}))
+	},
+	setPendingStatusToLift({ shaftSystem }, shaftToGo){
+		const pendingLiftIndex = shaftSystem.findIndex(({ number }) => number === shaftToGo.number)
+		shaftSystem[pendingLiftIndex] = {
+			...shaftSystem[pendingLiftIndex],
+			pending: true,
+			currentLevel: shaftToGo.movingTo,
+		}
 	},
 	initButtonSystem(state){
 		state.buttonSystem = Array(state.levels)
 		.fill()
 		.map((_,index) => ({
 			level: index + 1,
-			called: false
+			called: false,
 		}))
 		.reverse()
 	},
@@ -32,16 +42,18 @@ export const mutations = {
 			isMoving: true
 		}
 	},
-	registerButtonCall({ buttonSystem },{ movingTo }){
+	registerButtonCall({ buttonSystem },{ movingTo, number }){
 			const calledButtonIndex = buttonSystem
 			.findIndex(({ level }) => level === movingTo) // find btn which was called
 				if(!buttonSystem[calledButtonIndex].called) // если кнопка уже вызвана, повторная регистрация не происходит
 			buttonSystem[calledButtonIndex].called = true
+			buttonSystem[calledButtonIndex].processingLiftNumber = number
 	},
 	unregisterButtonCall({ buttonSystem }, { movingTo }){
 		const calledButtonIndex = buttonSystem
 		.findIndex(({ level }) => level === movingTo) // find btn which get lift arrived
 		buttonSystem[calledButtonIndex].called = false
+		buttonSystem[calledButtonIndex].processingLiftNumber = null
 	},
 	unregisterShaftCall({ shaftSystem },{ number,movingTo }){
 		const shaftUnregisterIndex = shaftSystem
@@ -52,7 +64,8 @@ export const mutations = {
 			gap: null,
 			movingTo: null,
 			direction: null,
-			isMoving: false
+			isMoving: false,
+			pending: false
 		}
 	}
 

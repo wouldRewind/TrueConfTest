@@ -6,10 +6,15 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 export default {
-	setup(){
+	setup({ lift }){
+		const direction = computed(() => lift.value && lift.value.direction)
+		return {
+			direction
+		}
 	},
-	props: ['direction']	
+	props: ['lift']	
 }
 </script>
 

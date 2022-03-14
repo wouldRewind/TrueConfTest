@@ -11,20 +11,20 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
-import { findFreeShaft } from "./functions"
-import { onMounted, watch } from '@vue/runtime-core'
+import { findFreeClosestShaft } from "./functions"
+import { watch } from '@vue/runtime-core'
 export default {
 	setup({ level }){
-		const {dispatch, getters: {watchButtonState, getCallButton, shaftSystem, maxLevel }} = useStore()
-		let btn;
+		const {dispatch, getters: {watchButtonState, shaftSystem, maxLevel,getPendingStatus }} = useStore()
 		const btnIsCalled = ref(false)
-		onMounted(() => btn = getCallButton(level))
+		watch(() => getPendingStatus(level),
+		() => console.log(1))
 		watch(() => watchButtonState(level),
 		() => {
 			btnIsCalled.value = !btnIsCalled.value
 		})
 		const handleButtonCall = () => {
-			const freeShaft = findFreeShaft(shaftSystem,level,maxLevel)
+			const freeShaft = findFreeClosestShaft(shaftSystem,level,maxLevel)
 			// если есть хотя одна свободная шахта и кнопка не была вызвана, вызов регается
 			if(!freeShaft.allBusy && !btnIsCalled.value)
 				dispatch("registerCall",freeShaft)	

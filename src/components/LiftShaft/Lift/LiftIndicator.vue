@@ -1,7 +1,7 @@
 <template>
 	<div class="indicator">
 		<!-- LIFTARROW SHOULD SHOW CORRECT DIRECTION -->
-		<LiftArrow :direction="'up'"/>
+		<LiftArrow :lift="lift"/>
 		<div class="indicator-to">
 			{{ movingTo }}
 		</div>
@@ -9,12 +9,16 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import LiftArrow from "./LiftArrow.vue"
 export default {
-	setup(){
-
+	setup({ lift }){
+		const movingTo = computed(() => lift.value && lift.value.movingTo)
+		return {
+			movingTo,
+		}
 	},
-	props: ['movingTo'],
+	props: ['lift'],
 	components: {
 		LiftArrow
 	}
@@ -33,9 +37,10 @@ export default {
 		height: $indicatorHeight;
 		width: $indicatorWidth;
 		display: flex;
-		display: none;
-		&-to{
-			color: $textIndicatorColor;
+		// display: none;
+	}
+	.indicator-to{
+			color: white;
 			font-family: serif;
 			font-size: .7rem;
 			width: 50%;
@@ -43,5 +48,4 @@ export default {
 			align-items: center;
 			justify-content: start;
 		}
-	}
 </style>

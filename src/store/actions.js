@@ -12,5 +12,8 @@ export const actions = {
 	unregisterCall({ commit }, shaftToGo){
 		commit("unregisterButtonCall",shaftToGo)
 		commit("unregisterShaftCall",shaftToGo)
+	},
+	setPendingStatusToLift({ commit },shaftToGo){
+		commit("setPendingStatusToLift",shaftToGo)
 	}
 } 

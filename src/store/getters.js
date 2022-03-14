@@ -4,6 +4,10 @@ export const getters = {
 	buttonSystem: ({ buttonSystem }) => buttonSystem,
 	shaftSystem: ({ shaftSystem }) => shaftSystem,
 	getLift: ({ shaftSystem }) => number => shaftSystem.find(shaft => shaft.number === number),
+	getPendingStatus: ({ shaftSystem }) =>  movingTo => {
+		const shaft = shaftSystem.find(shaft => shaft.movingTo === movingTo)
+		return shaft ? shaft.pending: false
+	},
 	watchLiftMoving: (state,{ getLift }) => number => getLift(number).isMoving,
 	getCallButton: ({ buttonSystem }) => level => buttonSystem.find(btn => btn.level === level),
 	watchButtonState: (state, { getCallButton }) => level => getCallButton(level).called,
@@ -12,6 +16,7 @@ export const getters = {
 		return areaHeight / levels
 		// добавить мин и макс размеры левлу
 	},
+
 	areaBackground: (state,{ levelSize }) => {
 		const firstColor = "#FFDDD6"
 		const secondColor = "#DBDBDB"
