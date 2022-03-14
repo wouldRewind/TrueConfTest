@@ -26,7 +26,6 @@ export default {
 	.btn-system{
 		width: 10%;
 		display: grid;
-		// grid-template-columns: 1fr;
 		flex-direction: column;
 	}
 </style>

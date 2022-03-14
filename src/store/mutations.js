@@ -32,7 +32,7 @@ export const mutations = {
 			isMoving: true
 		}
 	},
-	registerButtonCall({ buttonSystem },{ gap, movingTo }){
+	registerButtonCall({ buttonSystem },{ movingTo }){
 			const calledButtonIndex = buttonSystem
 			.findIndex(({ level }) => level === movingTo) // find btn which was called
 				if(!buttonSystem[calledButtonIndex].called) // если кнопка уже вызвана, повторная регистрация не происходит
@@ -43,7 +43,7 @@ export const mutations = {
 		.findIndex(({ level }) => level === movingTo) // find btn which get lift arrived
 		buttonSystem[calledButtonIndex].called = false
 	},
-	unregisterShaftCall({ shaftSystem },{ number, currentLevel, gap,movingTo }){
+	unregisterShaftCall({ shaftSystem },{ number,movingTo }){
 		const shaftUnregisterIndex = shaftSystem
 		.findIndex((shaft) => shaft.number === number)
 		shaftSystem[shaftUnregisterIndex] = {

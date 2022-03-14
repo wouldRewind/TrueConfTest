@@ -19,6 +19,4 @@ export const getters = {
 	},
 	maxLevel: ({ buttonSystem }) => Math.max(
 		...buttonSystem.map(({ level }) => level)),
-	// getButton: ({ buttonSystem }) => level => buttonSystem.find(btn => btn.level === level),
-
 }	

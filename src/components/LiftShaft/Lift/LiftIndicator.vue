@@ -1,5 +1,6 @@
 <template>
 	<div class="indicator">
+		<!-- LIFTARROW SHOULD SHOW CORRECT DIRECTION -->
 		<LiftArrow :direction="'up'"/>
 		<div class="indicator-to">
 			{{ movingTo }}

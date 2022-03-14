@@ -4,6 +4,7 @@
 		transform: liftTranslate,
 		transition: liftTransition
 		}" class="lift">
+		<!-- LIFTINDICATOR SHOULD SHOW CORRECT VALUE -->
 		<LiftIndicator :movingTo="13"/>
 	</div>	
 </template>
@@ -29,7 +30,6 @@ export default {
 		watch(() => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
 		liftInMoving => {
 			lift = getLift(number)
-			// продумать логику
 			if(liftInMoving){ //
 				const prevTranslate = liftTranslate.value.match(/\-?\d+/)[0] || 0
 				const {gap, movingTo, currentLevel} = lift
