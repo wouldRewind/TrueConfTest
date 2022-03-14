@@ -3,6 +3,10 @@ export const getters = {
 	shaftsAmount: ({ shafts }) => shafts,
 	buttonSystem: ({ buttonSystem }) => buttonSystem,
 	shaftSystem: ({ shaftSystem }) => shaftSystem,
+	getLift: ({ shaftSystem }) => number => shaftSystem.find(shaft => shaft.number === number),
+	watchLiftMoving: (state,{ getLift }) => number => getLift(number).isMoving,
+	getCallButton: ({ buttonSystem }) => level => buttonSystem.find(btn => btn.level === level),
+	watchButtonState: (state, { getCallButton }) => level => getCallButton(level).called,
 	levelSize: ({ levels }) => {
 		const areaHeight = window.innerHeight - 16
 		return areaHeight / levels
@@ -15,5 +19,6 @@ export const getters = {
 	},
 	maxLevel: ({ buttonSystem }) => Math.max(
 		...buttonSystem.map(({ level }) => level)),
-	// calledButton: ({ buttonSystem }) => level => level,
+	// getButton: ({ buttonSystem }) => level => buttonSystem.find(btn => btn.level === level),
+
 }	

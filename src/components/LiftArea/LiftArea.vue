@@ -4,7 +4,8 @@
 			<div class="area-shafts">
 				<LiftShaft 
 				v-for="(shaft,index) in shaftSystem" 
-				:key="index"/>
+				:key="index"
+				:number="shaft.number"/>
 			</div>
 			<ButtonSystem/>
 		</div>

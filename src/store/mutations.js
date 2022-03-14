@@ -34,9 +34,26 @@ export const mutations = {
 	},
 	registerButtonCall({ buttonSystem },{ gap, movingTo }){
 			const calledButtonIndex = buttonSystem
-			.findIndex(({ level }) => level === movingTo)
-			if(!buttonSystem[calledButtonIndex].called)
-				buttonSystem[calledButtonIndex].called = true
+			.findIndex(({ level }) => level === movingTo) // find btn which was called
+				if(!buttonSystem[calledButtonIndex].called) // если кнопка уже вызвана, повторная регистрация не происходит
+			buttonSystem[calledButtonIndex].called = true
 	},
+	unregisterButtonCall({ buttonSystem }, { movingTo }){
+		const calledButtonIndex = buttonSystem
+		.findIndex(({ level }) => level === movingTo) // find btn which get lift arrived
+		buttonSystem[calledButtonIndex].called = false
+	},
+	unregisterShaftCall({ shaftSystem },{ number, currentLevel, gap,movingTo }){
+		const shaftUnregisterIndex = shaftSystem
+		.findIndex((shaft) => shaft.number === number)
+		shaftSystem[shaftUnregisterIndex] = {
+			number,
+			currentLevel: movingTo,
+			gap: null,
+			movingTo: null,
+			direction: null,
+			isMoving: null
+		}
+	}
 
 }

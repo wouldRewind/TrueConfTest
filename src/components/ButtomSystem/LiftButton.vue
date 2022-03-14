@@ -1,7 +1,7 @@
 <template>
 	<div class="btn-wrap">
-		<div :class="[btn,activeButton ? 'btn_active' : '' ]" 
-		@click="changeActiveButton" class="btn" type="button">
+		<div :class="[btn,btnIsCalled ? 'btn_active' : '' ]" 
+		@click="handleButtonCall" class="btn" type="button">
 			<div class="btn__circle"></div>
 			<span class="level">{{ level }}</span>
 		</div>
@@ -12,20 +12,26 @@
 import { ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import { findFreeShaft } from "./functions"
+import { computed, onMounted, onUpdated, watch } from '@vue/runtime-core'
 export default {
 	setup({ level }){
-		const {dispatch ,getters: { buttonSystem, shaftSystem, maxLevel }} = useStore()
-		const activeButton = ref(false)
-		const changeActiveButton = () => {
+		const {dispatch, getters: {watchButtonState, getCallButton, shaftSystem, maxLevel }} = useStore()
+		let btn;
+		const btnIsCalled = ref(false)
+		onMounted(() => btn = getCallButton(level))
+		watch(() => watchButtonState(level),
+		(cur,prev) => {
+			btnIsCalled.value = !btnIsCalled.value
+		})
+		const handleButtonCall = () => {
 			const freeShaft = findFreeShaft(shaftSystem,level,maxLevel)
-			// console.log(freeShaft)
-			dispatch("registerCall",freeShaft)
-			activeButton.value = !activeButton.value
+			console.log(freeShaft)
+			if(!freeShaft.allBusy)
+				dispatch("registerCall",freeShaft)	
 		}
-
 		return {
-			activeButton,
-			changeActiveButton
+			btnIsCalled,
+			handleButtonCall
 		}
 	},
 	props: ['level']
@@ -59,14 +65,6 @@ export default {
 		align-items: center;
 		position: relative;
 		transition: $transition;
-		// &::after{
-		// 		content: "";
-		// 		position: absolute;
-		// 		width: calc(100% / 1.8);
-		// 		height: calc(100% / 1.8);
-		// 		border-radius: 50%;
-		// 		border: 1px solid $normalButtonColor;
-		// 	}
 		&__circle{
 			border-radius: 100%;
 			height: calc(100% / 2.5);

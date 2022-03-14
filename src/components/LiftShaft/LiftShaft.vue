@@ -1,6 +1,6 @@
 <template>
 	<div :style="{width: levelSize}" class="shaft">
-		<Lift />
+		<Lift :number="number" />
 	</div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
 	components: {
 		Lift
 	},
+	props: ['number']
 }
 </script>
 

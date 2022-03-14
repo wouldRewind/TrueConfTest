@@ -1,5 +1,9 @@
 <template>
-	<div :style="{height: levelSize}" class="lift">
+	<div ref="liftRef" :style="{
+		height: levelSize,
+		transform: liftTranslate,
+		transition: liftTransition
+		}" class="lift">
 		<LiftIndicator :movingTo="13"/>
 	</div>	
 </template>
@@ -7,16 +11,40 @@
 <script>
 import LiftIndicator from "./LiftIndicator.vue"
 import { useStore } from 'vuex'
+import { onMounted, ref, watch } from '@vue/runtime-core'
 export default {
-	setup(){
-		const {getters: { levelSize }} = useStore()
+	setup({ number }){ 
+		const {dispatch,getters: { levelSize, getLift,watchLiftMoving}} = useStore()
+		let lift; //
+
+		const liftRef = ref(null)
+		onMounted(() => {
+			liftRef.value.addEventListener('transitionend',e => {
+				dispatch("unregisterCall",lift)
+			})
+		})
+
+		const liftTranslate = ref(``) // dynamic
+		const liftTransition = ref(``) // dynamic
+		watch(() => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
+		(cur,previous) => {
+			lift = getLift(number)
+			// продумать логику
+			liftTransition.value = `transform ${lift.gap}s linear` 
+			liftTranslate.value = `translateY(-${lift.gap}00%)`
+		})
+
 		return { 
-			levelSize: levelSize + 'px' 
+			levelSize: levelSize + 'px',
+			liftTranslate,
+			liftTransition,
+			liftRef
 			}
 	},
 	components: {
 		LiftIndicator
-	}
+	},
+	props: ['number']
 }
 </script>
 
@@ -28,6 +56,5 @@ export default {
 		width: 100%;
 		background: $liftColor;
 		position: relative;
-		transform: translateY();
 	}
 </style>
