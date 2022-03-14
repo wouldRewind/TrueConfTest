@@ -27,10 +27,10 @@ export default {
 		const liftTranslate = ref(`transform: translateY(0%);`) // dynamic
 		const liftTransition = ref(``) // dynamic
 		watch(() => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
-		(cur,previous) => {
+		liftInMoving => {
 			lift = getLift(number)
 			// продумать логику
-			if(cur){
+			if(liftInMoving){ //
 				const prevTranslate = liftTranslate.value.match(/\-?\d+/)[0] || 0
 				const {gap, movingTo, currentLevel} = lift
 				const newTranslateValue = +prevTranslate + (currentLevel - movingTo) * 100
