@@ -24,14 +24,20 @@ export default {
 			})
 		})
 
-		const liftTranslate = ref(``) // dynamic
+		const liftTranslate = ref(`transform: translateY(0%);`) // dynamic
 		const liftTransition = ref(``) // dynamic
 		watch(() => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
 		(cur,previous) => {
 			lift = getLift(number)
 			// продумать логику
-			liftTransition.value = `transform ${lift.gap}s linear` 
-			liftTranslate.value = `translateY(-${lift.gap}00%)`
+			if(cur){
+				const prevTranslate = liftTranslate.value.match(/\-?\d+/)[0] || 0
+				const {gap, movingTo, currentLevel} = lift
+				const newTranslateValue = +prevTranslate + (currentLevel - movingTo) * 100
+				liftTransition.value = `transform ${gap}s linear` 
+				liftTranslate.value = `translateY(${newTranslateValue}%)`
+			}
+			
 		})
 
 		return { 

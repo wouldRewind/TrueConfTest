@@ -10,7 +10,6 @@ export const actions = {
 		}
 	},
 	unregisterCall({ commit }, shaftToGo){
-		console.log(shaftToGo)
 		commit("unregisterButtonCall",shaftToGo)
 		commit("unregisterShaftCall",shaftToGo)
 	}

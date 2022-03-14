@@ -25,8 +25,9 @@ export default {
 		})
 		const handleButtonCall = () => {
 			const freeShaft = findFreeShaft(shaftSystem,level,maxLevel)
-			console.log(freeShaft)
-			if(!freeShaft.allBusy)
+			// console.log(btnIsCalled.value)
+			// если есть хотя одна свободная шахта и кнопка не была вызвана, вызов регается
+			if(!freeShaft.allBusy && !btnIsCalled.value)
 				dispatch("registerCall",freeShaft)	
 		}
 		return {

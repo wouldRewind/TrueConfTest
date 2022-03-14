@@ -52,7 +52,7 @@ export const mutations = {
 			gap: null,
 			movingTo: null,
 			direction: null,
-			isMoving: null
+			isMoving: false
 		}
 	}
 
