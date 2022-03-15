@@ -15,10 +15,10 @@ import { findFreeClosestShaft } from "./functions"
 import { computed, watch } from '@vue/runtime-core'
 export default {
 	setup({ level }){
-		const {dispatch, getters: {watchButtonState, shaftSystem, maxLevel,getPendingStatus }} = useStore()
+		const {dispatch, getters: {watchButtonState, shaftSystem, maxLevel,getPendingStatus, levelsQueue }} = useStore()
 		const btnIsCalledStatus = ref(false)
 		const liftPendingStatus = ref(false)
-		const callButtonIsActive = computed(() => btnIsCalledStatus.value && !liftPendingStatus.value)
+		const callButtonIsActive = computed(() => (btnIsCalledStatus.value && !liftPendingStatus.value) || levelsQueue.includes(level))
 		watch(() => getPendingStatus(level),
 		isPending => liftPendingStatus.value = isPending)
 		watch(() => watchButtonState(level),
@@ -29,7 +29,12 @@ export default {
 			const freeShaft = findFreeClosestShaft(shaftSystem,level,maxLevel)
 			// если есть хотя одна свободная шахта и кнопка не была вызвана, вызов регается
 			if(!freeShaft.allBusy && !btnIsCalledStatus.value)
-				dispatch("registerCall",freeShaft)	
+				dispatch("registerCall",freeShaft)
+			else if(freeShaft.allBusy && !btnIsCalledStatus.value) // все лифты заняты и кнопка НЕ вызвана - добавляю в очередь
+			{
+				dispatch("addToQueue",level)
+			}
+				
 		}
 		return {
 			callButtonIsActive,

@@ -15,5 +15,11 @@ export const actions = {
 	},
 	setPendingStatusToLift({ commit },shaftToGo){
 		commit("setPendingStatusToLift",shaftToGo)
+	},
+	addToQueue({ commit }, level){
+		commit("addToQueue",level)
+	},
+	removeFromQueue({ commit }){
+		commit("removeFromQueue")
 	}
 } 

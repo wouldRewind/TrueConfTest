@@ -3,6 +3,7 @@ export const getters = {
 	shaftsAmount: ({ shafts }) => shafts,
 	buttonSystem: ({ buttonSystem }) => buttonSystem,
 	shaftSystem: ({ shaftSystem }) => shaftSystem,
+	levelsQueue: ({ levelsQueue }) => levelsQueue,
 	getLift: ({ shaftSystem }) => number => shaftSystem.find(shaft => shaft.number === number),
 	getPendingStatus: ({ shaftSystem }) =>  movingTo => {
 		const shaft = shaftSystem.find(shaft => shaft.movingTo === movingTo)
