@@ -1,6 +1,6 @@
 <template>
 	<div class="btn-wrap">
-		<div :class="[btn,btnIsCalled ? 'btn_active' : '' ]" 
+		<div :class="[btn,callButtonIsActive ? 'btn_active' : '' ]" 
 		@click="handleButtonCall" class="btn" type="button">
 			<div class="btn__circle"></div>
 			<span class="level">{{ level }}</span>
@@ -12,25 +12,27 @@
 import { ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import { findFreeClosestShaft } from "./functions"
-import { watch } from '@vue/runtime-core'
+import { computed, watch } from '@vue/runtime-core'
 export default {
 	setup({ level }){
 		const {dispatch, getters: {watchButtonState, shaftSystem, maxLevel,getPendingStatus }} = useStore()
-		const btnIsCalled = ref(false)
+		const btnIsCalledStatus = ref(false)
+		const liftPendingStatus = ref(false)
+		const callButtonIsActive = computed(() => btnIsCalledStatus.value && !liftPendingStatus.value)
 		watch(() => getPendingStatus(level),
-		() => console.log(1))
+		isPending => liftPendingStatus.value = isPending)
 		watch(() => watchButtonState(level),
 		() => {
-			btnIsCalled.value = !btnIsCalled.value
+			btnIsCalledStatus.value = !btnIsCalledStatus.value
 		})
 		const handleButtonCall = () => {
 			const freeShaft = findFreeClosestShaft(shaftSystem,level,maxLevel)
 			// если есть хотя одна свободная шахта и кнопка не была вызвана, вызов регается
-			if(!freeShaft.allBusy && !btnIsCalled.value)
+			if(!freeShaft.allBusy && !btnIsCalledStatus.value)
 				dispatch("registerCall",freeShaft)	
 		}
 		return {
-			btnIsCalled,
+			callButtonIsActive,
 			handleButtonCall
 		}
 	},
