@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper">
+	<div :key="areaBackground" class="wrapper">
 		<div :style="{background: areaBackground}" class="area">
 			<div class="area-shafts">
 				<LiftShaft 
@@ -19,13 +19,22 @@ import LiftShaft from "../LiftShaft/LiftShaft.vue"
 import { useStore } from 'vuex'
 export default {
 	setup(){
-		const { dispatch , getters} = useStore()
-		dispatch("initSystem") // init shaftSystem & init buttonSystem 
+		const { dispatch, getters} = useStore();
+		if(localStorage && localStorage.state){
+			const localStorageState = JSON.parse(localStorage.state)
+			dispatch("insertLocalStorageState",localStorageState)
+		}
+		else dispatch("initSystem")
 		return {
 			areaBackground: getters.areaBackground,
 			shaftSystem: getters.shaftSystem
 		}
 	},	
+	methods: {
+		reRender(){
+			this.$forceUpdate()
+		}
+	},
 	components: {
 		ButtonSystem,
 		LiftButton,
@@ -46,6 +55,7 @@ export default {
 		width: 100%;
 		display: flex;
 		&-shafts{
+			// width: 90%;
 			box-sizing: content-box;
 			height: 100%;
 			display: flex;

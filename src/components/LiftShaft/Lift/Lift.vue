@@ -2,7 +2,7 @@
   <div
     ref="liftRef"
     :style="{
-      height: levelSize,
+	  height: levelSize,
       transform: liftTranslate,
       transition: liftTransition,
     }"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// height: levelSize,
 import LiftIndicator from "./LiftIndicator.vue";
 import { useStore } from "vuex";
 import { computed, onMounted, reactive, ref, watch } from "@vue/runtime-core";
@@ -30,6 +31,7 @@ export default {
         watchLiftMoving,
         levelsQueue,
       },
+	  state
     } = useStore();
     const lift = reactive(getLift(number)); //
     const indicatorIsVisible = computed(
@@ -116,16 +118,15 @@ export default {
 }
 @import "../../../scss/_var";
 .lift {
-  box-sizing: content-box;
-  // transition: $transition;
-  width: 100%;
-  background: $liftColor;
-  position: relative;
+	position: relative;
+	box-sizing: content-box;
+	width: 100%;
+	background: $liftColor;
 }
 .wait {
-  animation-timing-function: linear;
-  animation-iteration-count: 3;
-  animation-duration: 1s;
-  animation-name: blink;
+	animation-timing-function: linear;
+	animation-iteration-count: 3;
+	animation-duration: 1s;
+	animation-name: blink;
 }
 </style>

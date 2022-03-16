@@ -12,3 +12,19 @@ export const findFreeClosestShaft = (shaftSystem,levelToMove,maxLevel) => shaftS
 			allBusy: true, // if all shaft will be busy
 			gap: maxLevel // difference between levels - initially takes maximum value(i.e. maxLevel)
 		})
+		export const resetState = state => ({
+			...state,
+			buttonSystem: state.buttonSystem.map(({ level }) => ({
+				level,
+				called: false
+			})),
+			shaftSystem: state.shaftSystem.map(shaft => ({
+				...shaft,
+				direction: null,
+				gap: null,
+				isMoving: false,
+				movingTo: null,
+				pending: false
+			})),
+			levelsqQueue: []
+		})

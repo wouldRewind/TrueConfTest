@@ -27,5 +27,6 @@ export default {
 		width: 10%;
 		display: grid;
 		flex-direction: column;
+		justify-content: center;
 	}
 </style>

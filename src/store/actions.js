@@ -1,7 +1,11 @@
 export const actions = {
 	initSystem({ commit }){
-		commit("initShaftSystem")
-		commit("initButtonSystem")
+			commit("initShaftSystem")
+			commit("initButtonSystem")
+	},
+	insertLocalStorageState({ commit },localStorageState){
+		commit("insertLocalStorageState",localStorageState)
+		// console.log(2)
 	},
 	registerCall({ commit }, shaftToGo){
 		if(shaftToGo.gap !== 0){

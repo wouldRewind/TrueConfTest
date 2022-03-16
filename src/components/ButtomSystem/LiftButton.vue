@@ -3,6 +3,7 @@
 		<div :class="[btn,callButtonIsActive ? 'btn_active' : '' ]" 
 		@click="handleButtonCall" class="btn" type="button">
 			<div class="btn__circle"></div>
+			<div class="btn__circuit"></div>
 			<span class="level">{{ level }}</span>
 		</div>
 		</div>	
@@ -31,9 +32,8 @@ export default {
 			if(!freeShaft.allBusy && !btnIsCalledStatus.value)
 				dispatch("registerCall",freeShaft)
 			else if(freeShaft.allBusy && !btnIsCalledStatus.value) // все лифты заняты и кнопка НЕ вызвана - добавляю в очередь
-			{
 				dispatch("addToQueue",level)
-			}
+			
 				
 		}
 		return {
@@ -46,6 +46,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	@keyframes activeNormal {
+		0%{
+			background: rgba(#000,.2);
+		}
+		100%{
+			background: initial;
+		}
+	}
 	@import "../../scss/_var";
 	.level{
 		$fontSize: 11px;
@@ -72,14 +80,27 @@ export default {
 		align-items: center;
 		position: relative;
 		transition: $transition;
+		&:hover{
+			background: lighten($normalButtonColor,50);
+		}
+		&:active{
+			background: lighten($normalButtonColor,45);
+		}
 		&__circle{
 			border-radius: 100%;
 			height: calc(100% / 2.5);
 			width: calc(100% / 2.5);
 			background: $normalButtonColor;
+
 		}
 		&_active{
 			border: 1px solid $activeButtonColor;
+			&:hover{
+			background: lighten($activeButtonColor,35);
+			}
+			&:active{
+			background: lighten($activeButtonColor,25);
+			}
 			&::after{
 				border: inherit;
 			}

@@ -2,6 +2,7 @@ export const getters = {
 	levelsAmount: ({ levels }) => levels,
 	shaftsAmount: ({ shafts }) => shafts,
 	buttonSystem: ({ buttonSystem }) => buttonSystem,
+	getState: (state) => state,
 	shaftSystem: ({ shaftSystem }) => shaftSystem,
 	levelsQueue: ({ levelsQueue }) => levelsQueue,
 	getLift: ({ shaftSystem }) => number => shaftSystem.find(shaft => shaft.number === number),
@@ -20,7 +21,8 @@ export const getters = {
 
 	areaBackground: (state,{ levelSize }) => {
 		const firstColor = "#FFDDD6"
-		const secondColor = "#DBDBDB"
+		const secondColor = "#fff"
+
 		return 'repeating-linear-gradient(' + firstColor + ', '+ firstColor + ' ' + levelSize +'px, '+ secondColor + ' ' + levelSize +'px, '+ secondColor +' ' + levelSize * 2 + 'px)'
 	},
 	maxLevel: ({ buttonSystem }) => Math.max(
