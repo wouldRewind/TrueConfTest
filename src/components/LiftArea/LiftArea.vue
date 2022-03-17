@@ -55,7 +55,6 @@ export default {
 		width: 100%;
 		display: flex;
 		&-shafts{
-			// width: 90%;
 			box-sizing: content-box;
 			height: 100%;
 			display: flex;

@@ -15,15 +15,15 @@ export const getters = {
 	watchButtonState: (state, { getCallButton }) => level => getCallButton(level).called,
 	levelSize: ({ levels }) => {
 		const areaHeight = window.innerHeight - 16
-		// const
-		return areaHeight / levels
+		const levelSize = areaHeight / levels
+		return levelSize
 		// добавить мин и макс размеры левлу
 	},
 
 	areaBackground: (state,{ levelSize }) => {
-		const firstColor = "#FFDDD6"
-		const secondColor = "#fff"
-
+		const firstColor = "#e9f7ec"
+		const secondColor = "#fcfffe"
+		
 		return 'repeating-linear-gradient(' + firstColor + ', '+ firstColor + ' ' + levelSize +'px, '+ secondColor + ' ' + levelSize +'px, '+ secondColor +' ' + levelSize * 2 + 'px)'
 	},
 	maxLevel: ({ buttonSystem }) => Math.max(

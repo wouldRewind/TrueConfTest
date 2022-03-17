@@ -23,9 +23,7 @@ export default {
 		watch(() => getPendingStatus(level),
 		isPending => liftPendingStatus.value = isPending)
 		watch(() => watchButtonState(level),
-		() => {
-			btnIsCalledStatus.value = !btnIsCalledStatus.value
-		})
+		() => btnIsCalledStatus.value = !Boolean(btnIsCalledStatus.value))
 		const handleButtonCall = () => {
 			const freeShaft = findFreeClosestShaft(shaftSystem,level,maxLevel)
 			// если есть хотя одна свободная шахта и кнопка не была вызвана, вызов регается
@@ -33,8 +31,6 @@ export default {
 				dispatch("registerCall",freeShaft)
 			else if(freeShaft.allBusy && !btnIsCalledStatus.value) // все лифты заняты и кнопка НЕ вызвана - добавляю в очередь
 				dispatch("addToQueue",level)
-			
-				
 		}
 		return {
 			callButtonIsActive,

@@ -1,6 +1,6 @@
 export const state = {
 	shafts: 4, // количество лифтовых шахт
-	levels: 7, // количество этажей,
+	levels: 17, // количество этажей,
 	shaftSystem: [],
 	buttonSystem: [],
 	levelsQueue: [] // FIFO

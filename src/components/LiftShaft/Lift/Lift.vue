@@ -1,15 +1,14 @@
 <template>
-  <div
+	<div
     ref="liftRef"
     :style="{
-	  height: levelSize,
-      transform: liftTranslate,
-      transition: liftTransition,
+		height: levelSize,
+    	transform: liftTranslate,
+    	transition: liftTransition,
     }"
-    class="lift"
-  >
-    <LiftIndicator v-show="indicatorIsVisible" :lift="lift" />
-  </div>
+    class="lift">
+    	<LiftIndicator v-show="indicatorIsVisible" :lift="lift" />
+	</div>
 </template>
 
 <script>
@@ -18,22 +17,20 @@ import { useStore } from "vuex";
 import { computed, onMounted, reactive, ref, watch } from "@vue/runtime-core";
 import { findFreeClosestShaft } from "@/components/ButtomSystem/functions";
 export default {
-  setup({ number }) {
+	setup({ number }) {
     const {
-      dispatch,
-      getters: {
-        levelSize,
-        shaftSystem,
-        maxLevel,
-        getLift,
-        watchLiftMoving,
-        levelsQueue,
-      },
-	  state
-    } = useStore();
+    	dispatch,
+    	getters: {
+        	levelSize,
+        	shaftSystem,
+        	maxLevel,
+        	getLift,
+        	watchLiftMoving,
+        	levelsQueue,
+    }} = useStore();
     const lift = reactive(getLift(number)); //
     const indicatorIsVisible = computed(
-      () => lift.value && lift.value.direction
+    	() => lift.value && lift.value.direction
     );
     const liftRef = ref(null);
 
@@ -41,75 +38,75 @@ export default {
 
     const liftTransition = ref(``); // dynamic
     const moveLift = (liftInMoving = "queue") => {
-      lift.value = getLift(number);
-      if (liftInMoving) {
+    	lift.value = getLift(number);
+    	if (liftInMoving) {
         //
-        const prevTranslate = liftTranslate.value.match(/\-?\d+/)[0] || 0;
-        const { gap, movingTo, currentLevel } = lift.value;
-        const newTranslateValue =
-          +prevTranslate + (currentLevel - movingTo) * 100;
-        liftTransition.value = `transform ${gap}s linear`;
-        liftTranslate.value = `translateY(${newTranslateValue}%)`;
-      }
+        	const prevTranslate = liftTranslate.value.match(/\-?\d+/)[0] || 0;
+        	const { gap, movingTo, currentLevel } = lift.value;
+        	const newTranslateValue =
+            +prevTranslate + (currentLevel - movingTo) * 100;
+        	liftTransition.value = `transform ${gap}s linear`;
+        	liftTranslate.value = `translateY(${newTranslateValue}%)`;
+    	}
     };
     onMounted(() => {
-      liftRef.value.addEventListener("transitionend", (e) => {
-        liftRef.value.classList.add("wait");
-        dispatch("setPendingStatusToLift", lift.value);
-        // вешаю анимацию
-      });
-      liftRef.value.addEventListener("animationend", (e) => {
-        liftRef.value.classList.remove("wait");
-        dispatch("unregisterCall", lift.value);
-        lift.value = getLift(number); // получаю новое состояние лифта после unregistation
+    	liftRef.value.addEventListener("transitionend", (e) => {
+        	liftRef.value.classList.add("wait");
+        	dispatch("setPendingStatusToLift", lift.value);
+        	// вешаю анимацию
+    	});
+    	liftRef.value.addEventListener("animationend", (e) => {
+        	liftRef.value.classList.remove("wait");
+        	dispatch("unregisterCall", lift.value);
+        	lift.value = getLift(number); // получаю новое состояние лифта после unregistation
 
-        if (levelsQueue.length) {
-          // если очередь не пуста
-          const freeClosestShaft = findFreeClosestShaft(
-            shaftSystem,
-            levelsQueue[0],
-            maxLevel
-          );
-          lift.value = freeClosestShaft;
-          dispatch("registerCall", lift.value);
-          moveLift();
-          dispatch("removeFromQueue");
+        	if (levelsQueue.length) {
+          	// если очередь не пуста
+        		const freeClosestShaft = findFreeClosestShaft(
+            		shaftSystem,
+            		levelsQueue[0],
+            		maxLevel
+    			);
+    			lift.value = freeClosestShaft;
+    			dispatch("registerCall", lift.value);
+    			moveLift();
+        		dispatch("removeFromQueue");
         }
-      });
+    	});
     });
     watch(
       () => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
-      (liftInMoving) => {
-        moveLift(liftInMoving);
-      }
+    	(liftInMoving) => {
+        	moveLift(liftInMoving);
+    	}
     );
     return {
-      levelSize: levelSize + "px",
-      liftTranslate,
-      liftTransition,
-      liftRef,
-      lift,
-      indicatorIsVisible,
+    	levelSize: levelSize + "px",
+    	liftTranslate,
+    	liftTransition,
+    	liftRef,
+    	lift,
+    	indicatorIsVisible,
     };
-  },
-  components: {
+	},
+	components: {
     LiftIndicator,
-  },
-  props: ["number"],
+},
+	props: ["number"],
 };
 </script>
 
 <style lang="scss" scoped>
 @keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 1;
-  }
+	0% {
+    	opacity: 1;
+	}
+	50% {
+    	opacity: 0.2;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 @import "../../../scss/_var";
 .lift {
