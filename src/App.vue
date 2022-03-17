@@ -14,10 +14,11 @@ export default {
 	  const replacer = (key,value) => key == "value" ? undefined: value;
 	  window.addEventListener("beforeunload",function(e){
 		if(localStorage){
-			// const isMovingShaft = store.state.shaftSystem.some(({ isMoving }) => isMoving)
-				localStorage.clear()
 				const localStorageState = JSON.stringify(resetState(store.state),replacer)
 				localStorage.setItem("state",localStorageState)
+				// Чтобы изменить число этажей, нужно закоментировать строку: localStorage.setItem("state",localStorageState) и в файле state.js изменить число уровней, перезагрузить страницу, затем раскомментировать строку
+
+				// this.localStorage.clear()
 		}
 	  })
   },

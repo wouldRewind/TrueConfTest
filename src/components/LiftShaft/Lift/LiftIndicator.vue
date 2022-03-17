@@ -1,6 +1,5 @@
 <template>
 	<div class="indicator">
-		<!-- LIFTARROW SHOULD SHOW CORRECT DIRECTION -->
 		<LiftArrow :lift="lift"/>
 		<div class="indicator-to">
 			{{ movingTo }}
@@ -37,7 +36,6 @@ export default {
 		height: $indicatorHeight;
 		width: $indicatorWidth;
 		display: flex;
-		// display: none;
 	}
 	.indicator-to{
 			color: white;

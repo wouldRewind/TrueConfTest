@@ -8,13 +8,11 @@
     }"
     class="lift"
   >
-    <!-- LIFTINDICATOR SHOULD SHOW CORRECT VALUE -->
     <LiftIndicator v-show="indicatorIsVisible" :lift="lift" />
   </div>
 </template>
 
 <script>
-// height: levelSize,
 import LiftIndicator from "./LiftIndicator.vue";
 import { useStore } from "vuex";
 import { computed, onMounted, reactive, ref, watch } from "@vue/runtime-core";
@@ -83,9 +81,6 @@ export default {
       () => watchLiftMoving(number), // когда лифт начинает/ заканчивает движение
       (liftInMoving) => {
         moveLift(liftInMoving);
-      },
-      {
-        immediate: true,
       }
     );
     return {

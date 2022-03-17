@@ -5,7 +5,6 @@ export const actions = {
 	},
 	insertLocalStorageState({ commit },localStorageState){
 		commit("insertLocalStorageState",localStorageState)
-		// console.log(2)
 	},
 	registerCall({ commit }, shaftToGo){
 		if(shaftToGo.gap !== 0){

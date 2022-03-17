@@ -50,13 +50,11 @@ export const mutations = {
 			.findIndex(({ level }) => level === movingTo) // find btn which was called
 		if (!buttonSystem[calledButtonIndex].called) // если кнопка уже вызвана, повторная регистрация не происходит
 			buttonSystem[calledButtonIndex].called = true
-		// buttonSystem[calledButtonIndex].processingLiftNumber = number
-	},
+		},
 	unregisterButtonCall({ buttonSystem }, { movingTo }) {
 		const calledButtonIndex = buttonSystem
 			.findIndex(({ level }) => level === movingTo) // find btn which get lift arrived
 		buttonSystem[calledButtonIndex].called = false
-		// buttonSystem[calledButtonIndex].processingLiftNumber = null
 	},
 	unregisterShaftCall({ shaftSystem }, { number, movingTo }) {
 		const shaftUnregisterIndex = shaftSystem

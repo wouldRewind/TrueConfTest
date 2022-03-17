@@ -15,6 +15,7 @@ export const getters = {
 	watchButtonState: (state, { getCallButton }) => level => getCallButton(level).called,
 	levelSize: ({ levels }) => {
 		const areaHeight = window.innerHeight - 16
+		// const
 		return areaHeight / levels
 		// добавить мин и макс размеры левлу
 	},

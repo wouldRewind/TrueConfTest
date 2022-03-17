@@ -26,5 +26,5 @@ export const findFreeClosestShaft = (shaftSystem,levelToMove,maxLevel) => shaftS
 				movingTo: null,
 				pending: false
 			})),
-			levelsqQueue: []
+			levelsQueue: []
 		})
