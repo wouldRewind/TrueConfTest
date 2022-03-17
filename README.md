@@ -77,7 +77,7 @@ npm install
 
 ## Компиляция проекта и отслеживание изменений
 ```
-npm run serve
+npm run start
 ```
 
 ## Сборка
